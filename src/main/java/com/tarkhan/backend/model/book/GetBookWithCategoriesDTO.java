@@ -1,13 +1,10 @@
 package com.tarkhan.backend.model.book;
 
-import lombok.AllArgsConstructor;
+import com.tarkhan.backend.model.category.CategoryDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class GetBooksByGenreDTO {
+public class GetBookWithCategoriesDTO {
     private Long id;
     private String title;
     private String description;
@@ -16,7 +13,5 @@ public class GetBooksByGenreDTO {
     private int pageNumber;
     private int year;
     private String language;
-    private String authorName;
-    private String publisherName;
-    private String genreName;
+    private CategoryDTO category;
 }

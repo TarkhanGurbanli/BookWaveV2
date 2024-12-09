@@ -7,14 +7,10 @@ import com.tarkhan.backend.entity.Publisher;
 import com.tarkhan.backend.model.author.AuthorDTO;
 import com.tarkhan.backend.model.book.GetBookWithAuthorsDTO;
 import com.tarkhan.backend.model.book.GetBookWithDetailsDTO;
-import com.tarkhan.backend.model.book.GetBookWithGenresDTO;
+import com.tarkhan.backend.model.book.GetBookWithCategoriesDTO;
 import com.tarkhan.backend.model.book.GetBookWithPublishersDTO;
 import com.tarkhan.backend.model.category.CategoryDTO;
 import com.tarkhan.backend.model.publisher.PublisherDTO;
-import com.tarkhan.backend.repository.AuthorRepository;
-import com.tarkhan.backend.repository.BookRepository;
-import com.tarkhan.backend.repository.CategoryRepository;
-import com.tarkhan.backend.repository.PublisherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +18,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BookMapping {
-    private final BookRepository bookRepository;
-    private final AuthorRepository authorRepository;
-    private final CategoryRepository categoryRepository;
-    private final PublisherRepository publisherRepository;
-
 //    public GetBookWithGenresDTO toBookWithGenres(Book book) {
 //        GetBookWithGenresDTO dto = new GetBookWithGenresDTO();
 //        dto.setId(book.getId());
@@ -52,8 +43,8 @@ public class BookMapping {
 //        return dto;
 //    }
 
-    public GetBookWithGenresDTO toBookWithGenres(Book book) {
-        GetBookWithGenresDTO dto = new GetBookWithGenresDTO();
+    public GetBookWithCategoriesDTO toBookWithGenres(Book book) {
+        GetBookWithCategoriesDTO dto = new GetBookWithCategoriesDTO();
         dto.setId(book.getId());
         dto.setTitle(book.getTitle());
         dto.setDescription(book.getDescription());
@@ -67,7 +58,7 @@ public class BookMapping {
             CategoryDTO categoryDTO = new CategoryDTO();
             categoryDTO.setId(category.getId());
             categoryDTO.setName(category.getName());
-            dto.setGenre(categoryDTO);
+            dto.setCategory(categoryDTO);
             dto.setImageUrl(book.getImageUrl());
         return dto;
     }
@@ -108,9 +99,7 @@ public class BookMapping {
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setId(author.getId());
         authorDTO.setName(author.getName());
-        authorDTO.setNationality(author.getNationality());
         authorDTO.setBiography(author.getBiography());
-        authorDTO.setBirthDate(author.getBirthDate());
         authorDTO.setImageUrl(author.getImageUrl());
 
         dto.setAuthor(authorDTO);
@@ -130,9 +119,7 @@ public class BookMapping {
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setId(author.getId());
         authorDTO.setName(author.getName());
-        authorDTO.setNationality(author.getNationality());
         authorDTO.setBiography(author.getBiography());
-        authorDTO.setBirthDate(author.getBirthDate());
         authorDTO.setImageUrl(author.getImageUrl());
         dto.setAuthor(authorDTO);
 
@@ -141,7 +128,7 @@ public class BookMapping {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(category.getId());
         categoryDTO.setName(category.getName());
-        dto.setGenre(categoryDTO);
+        dto.setCategory(categoryDTO);
 
         // Publisher
         Publisher publisher = book.getPublisher();

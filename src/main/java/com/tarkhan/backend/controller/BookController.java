@@ -135,12 +135,12 @@ public class BookController {
             @ApiResponse(responseCode = "404", description = "Genre not found"),
             @ApiResponse(responseCode = "400", description = "Invalid pagination parameters")
     })
-    public ResponseEntity<List<GetBooksByGenreDTO>> getBooksByGenre(
+    public ResponseEntity<List<GetBooksByCategoryDTO>> getBooksByGenre(
             @Parameter(description = "Name of the genre to filter by") @Valid @PathVariable String genreName,
             @Parameter(description = "Page number to retrieve") @Valid @RequestParam("pageNumber") int pageNumber,
             @Parameter(description = "Number of books per page") @Valid @RequestParam("pageSize") int pageSize
     ) {
-        List<GetBooksByGenreDTO> books = bookService.getBooksByCategory(genreName, pageNumber, pageSize);
+        List<GetBooksByCategoryDTO> books = bookService.getBooksByCategory(genreName, pageNumber, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(books);
     }
 
@@ -185,8 +185,8 @@ public class BookController {
             @ApiResponse(responseCode = "200",
                     description = "List of books with genres retrieved successfully")
     })
-    public ResponseEntity<List<GetBookWithGenresDTO>> getBooksByGenre() {
-        List<GetBookWithGenresDTO> books = bookService.getBooksWithCategory();
+    public ResponseEntity<List<GetBookWithCategoriesDTO>> getBooksByGenre() {
+        List<GetBookWithCategoriesDTO> books = bookService.getBooksWithCategory();
         return ResponseEntity.status(HttpStatus.OK).body(books);
     }
 

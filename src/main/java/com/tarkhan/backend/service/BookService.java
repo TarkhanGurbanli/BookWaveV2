@@ -10,16 +10,18 @@ public interface BookService {
     void deleteBook(Long id);
     List<BookDTO> getAllBooks();
     List<BookDTO> getPageAllBooks(int pageNumber, int pageSize);
-    List<GetBookWithGenresDTO> getBooksWithCategory();
+
+
+    List<GetBookWithCategoriesDTO> getBooksWithCategory();
     List<GetBookWithPublishersDTO> getBooksWithPublisher();
     List<GetBookWithAuthorsDTO> getBooksWithAuthor();
-    GetBookWithGenresDTO getBookByCategory(Long bookId);
+    GetBookWithCategoriesDTO getBookByCategory(Long bookId);
     GetBookWithPublishersDTO getBookByPublisher(Long bookId);
     GetBookWithAuthorsDTO getBookByAuthor(Long bookId);
     List<GetBookWithDetailsDTO> getBookWithDetails();
     GetBookWithDetailsDTO getBookByDetails(Long bookId);
     BookDTO getByIdBook(Long id);
-    List<GetBooksByGenreDTO> getBooksByCategory(String genreName, int pageNumber, int pageSize);
+    List<GetBooksByCategoryDTO> getBooksByCategory(String genreName, int pageNumber, int pageSize);
     List<GetBooksByAuthorDTO> getBooksByAuthor(String authorName, int pageNumber, int pageSize);
     List<GetBooksByPublisherDTO> getBooksByPublisher(String publisherName, int pageNumber, int pageSize);
     List<BookDTO> searchBooks(String keyword, String filterBy, int pageNumber, int pageSize);

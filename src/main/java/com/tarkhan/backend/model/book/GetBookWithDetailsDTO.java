@@ -16,6 +16,6 @@ public class GetBookWithDetailsDTO {
     private int year;
     private String language;
     private AuthorDTO author;
-    private CategoryDTO genre;
+    private CategoryDTO category;
     private PublisherDTO publisher;
 }

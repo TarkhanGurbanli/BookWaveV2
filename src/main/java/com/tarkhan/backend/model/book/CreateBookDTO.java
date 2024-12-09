@@ -3,6 +3,8 @@ package com.tarkhan.backend.model.book;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CreateBookDTO {
     @NotBlank(message = "Title cannot be empty")
@@ -23,5 +25,6 @@ public class CreateBookDTO {
     private Long publisherId;
 
     @NotNull(message = "Genre cannot be null")
-    private Long genreId;
+    private Long categoryId;
+    private List<Long> tagIds;
 }

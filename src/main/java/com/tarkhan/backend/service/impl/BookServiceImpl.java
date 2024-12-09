@@ -4,10 +4,7 @@ import com.tarkhan.backend.entity.*;
 import com.tarkhan.backend.exception.ResourceNotFoundException;
 import com.tarkhan.backend.mapping.BookMapping;
 import com.tarkhan.backend.model.book.*;
-import com.tarkhan.backend.repository.AuthorRepository;
-import com.tarkhan.backend.repository.BookRepository;
-import com.tarkhan.backend.repository.CategoryRepository;
-import com.tarkhan.backend.repository.PublisherRepository;
+import com.tarkhan.backend.repository.*;
 import com.tarkhan.backend.service.BookService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,7 @@ public class BookServiceImpl implements BookService {
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
     private final PublisherRepository publisherRepository;
+    private final TagRepository tagRepository;
     private final BookMapping bookMapping;
     private final ModelMapper modelMapper;
 
@@ -46,16 +44,21 @@ public class BookServiceImpl implements BookService {
         Publisher publisher = publisherRepository.findById(createBookDTO.getPublisherId())
                 .orElseThrow(() -> new ResourceNotFoundException("Publisher", "ID", createBookDTO.getPublisherId()));
 
-        Category category = categoryRepository.findById(createBookDTO.getGenreId())
-                .orElseThrow(() -> new ResourceNotFoundException(" ", "ID", createBookDTO.getGenreId()));
+        Category category = categoryRepository.findById(createBookDTO.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(" ", "ID", createBookDTO.getCategoryId()));
 
+        List<Tag> tags = tagRepository.findAllById(createBookDTO.getTagIds());
+        if (tags.isEmpty() && !createBookDTO.getTagIds().isEmpty()) {
+            throw new ResourceNotFoundException("Tag", "IDs", createBookDTO.getTagIds());
+        }
+
+        book.setTags(tags);
         book.setAuthor(author);
         book.setPublisher(publisher);
         book.setCategory(category);
 
         bookRepository.save(book);
     }
-
 
     @Override
     public void updateBook(Long id, UpdateBookDTO updateBookDTO) {
@@ -71,8 +74,8 @@ public class BookServiceImpl implements BookService {
         Publisher publisher = publisherRepository.findById(updateBookDTO.getPublisherId())
                 .orElseThrow(() -> new ResourceNotFoundException("Publisher", "ID", updateBookDTO.getPublisherId()));
 
-        Category category = categoryRepository.findById(updateBookDTO.getGenreId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "ID", updateBookDTO.getGenreId()));
+        Category category = categoryRepository.findById(updateBookDTO.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "ID", updateBookDTO.getCategoryId()));
 
         book.setAuthor(author);
         book.setPublisher(publisher);
@@ -106,10 +109,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<GetBookWithGenresDTO> getBooksWithCategory() {
+    public List<GetBookWithCategoriesDTO> getBooksWithCategory() {
         List<Book> books = bookRepository.findAll();
 
-        List<GetBookWithGenresDTO> dtos = books.stream()
+        List<GetBookWithCategoriesDTO> dtos = books.stream()
                 .map(bookMapping::toBookWithGenres)
                 .collect(Collectors.toList());
 
@@ -136,7 +139,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public GetBookWithGenresDTO getBookByCategory(Long bookId) {
+    public GetBookWithCategoriesDTO getBookByCategory(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new ResourceNotFoundException("Book", "ID", bookId));
         return bookMapping.toBookWithGenres(book);
@@ -182,7 +185,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<GetBooksByGenreDTO> getBooksByCategory(String genreName, int pageNumber, int pageSize) {
+    public List<GetBooksByCategoryDTO> getBooksByCategory(String genreName, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
 
         List<Book> booksPage = bookRepository.findBooksByCategoryName(genreName, pageable);
@@ -192,7 +195,7 @@ public class BookServiceImpl implements BookService {
         }
 
         return booksPage.stream()
-                .map((book -> modelMapper.map(book, GetBooksByGenreDTO.class)))
+                .map((book -> modelMapper.map(book, GetBooksByCategoryDTO.class)))
                 .collect(Collectors.toList());
     }
 
