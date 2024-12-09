@@ -16,6 +16,6 @@ public class BookDTO {
     private String authorName;
     private Long publisherId;
     private String publisherName;
-    private Long genreId;
-    private String genreName;
+    private Long categoryId;
+    private String categoryName;
 }

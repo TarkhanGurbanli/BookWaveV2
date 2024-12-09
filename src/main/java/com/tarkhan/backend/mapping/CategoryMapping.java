@@ -29,7 +29,7 @@ public class CategoryMapping {
                 bookDTO.setRating(book.getRating());
                 bookDTO.setAuthorId(category.getId());
                 bookDTO.setPublisherId(book.getPublisher().getId());
-                bookDTO.setGenreId(book.getCategory().getId());
+                bookDTO.setCategoryId(book.getCategory().getId());
 
                 bookDTO.setImageUrl(book.getImageUrl());
                 bookDTOs.add(bookDTO);

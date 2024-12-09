@@ -18,5 +18,5 @@ public class GetBooksByPublisherDTO {
     private String language;
     private String authorName;
     private String publisherName;
-    private String genreName;
+    private String categoryName;
 }

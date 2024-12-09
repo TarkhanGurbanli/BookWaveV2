@@ -17,8 +17,6 @@ public class AuthorMapping {
 
         getAuthorWithBooksDTO.setId(author.getId());
         getAuthorWithBooksDTO.setName(author.getName());
-        getAuthorWithBooksDTO.setBirthDate(author.getBirthDate());
-        getAuthorWithBooksDTO.setNationality(author.getNationality());
         getAuthorWithBooksDTO.setBiography(author.getBiography());
         getAuthorWithBooksDTO.setImageUrl(author.getImageUrl());
 
@@ -35,7 +33,7 @@ public class AuthorMapping {
                 bookDTO.setRating(book.getRating());
                 bookDTO.setAuthorId(author.getId());
                 bookDTO.setPublisherId(book.getPublisher().getId());
-                bookDTO.setGenreId(book.getCategory().getId());
+                bookDTO.setCategoryId(book.getCategory().getId());
                 bookDTO.setImageUrl(book.getImageUrl());
                 bookDTOs.add(bookDTO);
             }

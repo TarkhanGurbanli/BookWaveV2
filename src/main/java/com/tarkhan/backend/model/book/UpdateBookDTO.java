@@ -26,5 +26,5 @@ public class UpdateBookDTO {
     private Long publisherId;
 
     @NotNull(message = "Genre cannot be null")
-    private Long genreId;
+    private Long categoryId;
 }

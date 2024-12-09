@@ -21,12 +21,6 @@ public class Author extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Past(message = "Birth date must be in the past")
-    private LocalDate birthDate;
-
-    @NotBlank(message = "Nationality cannot be empty")
-    private String nationality;
-
     @Size(max = 1500, message = "Biography cannot exceed 1500 characters")
     @Column(length = 1500)
     private String biography;
